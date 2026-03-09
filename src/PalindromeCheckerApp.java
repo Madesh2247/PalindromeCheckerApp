@@ -5,7 +5,6 @@ public class PalindromeCheckerApp {
         System.out.println("version : 1.0");
         System.out.println("System initialized Sucessfully");
 
-
         String input = "madam";
         boolean isPalindrome = true;
 
