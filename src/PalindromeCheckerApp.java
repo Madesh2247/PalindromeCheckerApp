@@ -5,45 +5,160 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-public class PalindromeCheckerApp {
+public class PalindromeUseCases {
 
     public static void main(String[] args) {
 
-        String input = "A man a plan a canal Panama";
+        /* UC1 – Application Entry & Welcome Message */
+        printHeader("UC1 - Application Entry");
 
-        System.out.println("Original Input: " + input);
+        System.out.println("Palindrome Checker Application Started\n");
+
+
+        /* UC2 – Hardcoded Palindrome Result */
+        printHeader("UC2 - Hardcoded Palindrome Check");
+
+        String hardcoded = "madam";
+        System.out.println("Input : " + hardcoded);
+        System.out.println("Is Palindrome : " + TwoPointerMethod.check(hardcoded));
         System.out.println();
 
-        // Normalize input
-        String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        System.out.println("1. Two Pointer Method: " + TwoPointerMethod.check(normalized));
-        System.out.println("2. Reverse String Method: " + ReverseStringMethod.check(normalized));
-        System.out.println("3. Char Array Method: " + CharArrayMethod.check(normalized));
-        System.out.println("4. Stack Method: " + StackMethod.check(normalized));
-        System.out.println("5. Queue + Stack Method: " + QueueStackMethod.check(normalized));
-        System.out.println("6. Deque Method: " + DequeMethod.check(normalized));
-        System.out.println("7. LinkedList Method: " + LinkedListMethod.check(normalized));
-        System.out.println("8. Recursion Method: " + RecursionMethod.check(normalized,0,normalized.length()-1));
+        /* UC3 – String Reverse Method */
+        printHeader("UC3 - Reverse String Method");
+
+        String word1 = "radar";
+        System.out.println("Input : " + word1);
+        System.out.println("Is Palindrome : " + ReverseStringMethod.check(word1));
+        System.out.println();
+
+
+        /* UC4 – Character Array Method */
+        printHeader("UC4 - Character Array Method");
+
+        String word2 = "level";
+        System.out.println("Input : " + word2);
+        System.out.println("Is Palindrome : " + CharArrayMethod.check(word2));
+        System.out.println();
+
+
+        /* UC5 – Stack Based Method */
+        printHeader("UC5 - Stack Based Palindrome");
+
+        String word3 = "noon";
+        System.out.println("Input : " + word3);
+        System.out.println("Is Palindrome : " + StackMethod.check(word3));
+        System.out.println();
+
+
+        /* UC6 – Queue + Stack Method */
+        printHeader("UC6 - Queue + Stack Method");
+
+        String word4 = "civic";
+        System.out.println("Input : " + word4);
+        System.out.println("Is Palindrome : " + QueueStackMethod.check(word4));
+        System.out.println();
+
+
+        /* UC7 – Deque Method */
+        printHeader("UC7 - Deque Based Method");
+
+        String word5 = "refer";
+        System.out.println("Input : " + word5);
+        System.out.println("Is Palindrome : " + DequeMethod.check(word5));
+        System.out.println();
+
+
+        /* UC8 – LinkedList Method */
+        printHeader("UC8 - LinkedList Based Method");
+
+        String word6 = "level";
+        System.out.println("Input : " + word6);
+        System.out.println("Is Palindrome : " + LinkedListMethod.check(word6));
+        System.out.println();
+
+
+        /* UC9 – Recursive Method */
+        printHeader("UC9 - Recursive Palindrome Check");
+
+        String word7 = "racecar";
+        System.out.println("Input : " + word7);
+        System.out.println("Is Palindrome : " +
+                RecursionMethod.check(word7,0,word7.length()-1));
+        System.out.println();
+
+
+        /* UC10 – Case Insensitive & Ignore Spaces */
+        printHeader("UC10 - Case Insensitive Palindrome");
+
+        String sentence = "A man a plan a canal Panama";
+        String normalized = sentence.replaceAll("[^a-zA-Z0-9]","").toLowerCase();
+
+        System.out.println("Original : " + sentence);
+        System.out.println("Normalized : " + normalized);
+        System.out.println("Is Palindrome : " + TwoPointerMethod.check(normalized));
+        System.out.println();
+
+
+        /* UC11 – Object Oriented Service */
+        printHeader("UC11 - OOP Service Class");
 
         PalindromeService service = new PalindromeService();
-        System.out.println("9. Service Class Method: " + service.checkPalindrome(normalized));
+
+        String word8 = "madam";
+        System.out.println("Input : " + word8);
+        System.out.println("Is Palindrome : " +
+                service.checkPalindrome(word8));
+        System.out.println();
+
+
+        /* UC12 – Strategy Pattern */
+        printHeader("UC12 - Strategy Pattern");
 
         PalindromeStrategy strategy = new StackStrategy();
-        System.out.println("10. Strategy Pattern (Stack): " + strategy.check(normalized));
 
-        PalindromeStrategy strategy2 = new TwoPointerStrategy();
-        System.out.println("11. Strategy Pattern (Two Pointer): " + strategy2.check(normalized));
+        String word9 = "noon";
+        System.out.println("Input : " + word9);
+        System.out.println("Strategy Used : StackStrategy");
+        System.out.println("Is Palindrome : " + strategy.check(word9));
+        System.out.println();
+
+
+        /* UC13 – Performance Comparison */
+        printHeader("UC13 - Performance Comparison");
+
+        String test = "amanaplanacanalpanama";
+
+        long start = System.nanoTime();
+        boolean result = TwoPointerMethod.check(test);
+        long end = System.nanoTime();
+
+        System.out.println("Input : " + test);
+        System.out.println("Result : " + result);
+        System.out.println("Execution Time (nanoseconds) : " + (end-start));
+    }
+
+
+    /* HEADER FUNCTION */
+    public static void printHeader(String uc){
+
+        System.out.println("=================================================");
+        System.out.println("Welcome to the Palindrome Checker Management System");
+        System.out.println("Version : 1.0");
+        System.out.println("System initialized successfully.");
+        System.out.println("Running : " + uc);
+        System.out.println("=================================================");
     }
 }
 
-/* 1. Two Pointer Method */
+
+/* UC2 & UC10 – Two Pointer Method */
 class TwoPointerMethod {
 
     public static boolean check(String input){
 
         int start = 0;
-        int end = input.length() - 1;
+        int end = input.length()-1;
 
         while(start < end){
 
@@ -59,7 +174,8 @@ class TwoPointerMethod {
     }
 }
 
-/* 2. Reverse String Method */
+
+/* UC3 – Reverse String */
 class ReverseStringMethod {
 
     public static boolean check(String input){
@@ -74,7 +190,8 @@ class ReverseStringMethod {
     }
 }
 
-/* 3. Character Array Method */
+
+/* UC4 – Character Array */
 class CharArrayMethod {
 
     public static boolean check(String input){
@@ -98,7 +215,8 @@ class CharArrayMethod {
     }
 }
 
-/* 4. Stack Method */
+
+/* UC5 – Stack Method */
 class StackMethod {
 
     public static boolean check(String input){
@@ -120,7 +238,8 @@ class StackMethod {
     }
 }
 
-/* 5. Queue + Stack Method */
+
+/* UC6 – Queue + Stack */
 class QueueStackMethod {
 
     public static boolean check(String input){
@@ -144,7 +263,8 @@ class QueueStackMethod {
     }
 }
 
-/* 6. Deque Method */
+
+/* UC7 – Deque */
 class DequeMethod {
 
     public static boolean check(String input){
@@ -166,7 +286,8 @@ class DequeMethod {
     }
 }
 
-/* 7. LinkedList Method */
+
+/* UC8 – LinkedList */
 class LinkedListMethod {
 
     public static boolean check(String input){
@@ -188,10 +309,11 @@ class LinkedListMethod {
     }
 }
 
-/* 8. Recursion Method */
+
+/* UC9 – Recursion */
 class RecursionMethod {
 
-    public static boolean check(String s, int start, int end){
+    public static boolean check(String s,int start,int end){
 
         if(start >= end){
             return true;
@@ -205,7 +327,8 @@ class RecursionMethod {
     }
 }
 
-/* 9. Service Class (OOP) */
+
+/* UC11 – Service Class */
 class PalindromeService {
 
     public boolean checkPalindrome(String input){
@@ -227,11 +350,13 @@ class PalindromeService {
     }
 }
 
-/* 10. Strategy Pattern */
+
+/* UC12 – Strategy Pattern */
 interface PalindromeStrategy {
 
     boolean check(String input);
 }
+
 
 class StackStrategy implements PalindromeStrategy {
 
@@ -248,28 +373,6 @@ class StackStrategy implements PalindromeStrategy {
             if(c != stack.pop()){
                 return false;
             }
-        }
-
-        return true;
-    }
-}
-
-/* 11. Two Pointer Strategy */
-class TwoPointerStrategy implements PalindromeStrategy {
-
-    public boolean check(String input){
-
-        int start = 0;
-        int end = input.length()-1;
-
-        while(start < end){
-
-            if(input.charAt(start) != input.charAt(end)){
-                return false;
-            }
-
-            start++;
-            end--;
         }
 
         return true;
